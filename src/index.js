@@ -1,45 +1,20 @@
 // Import the React and ReactDom Libraries
-import React from "react";
-import { createRoot } from "react-dom/client";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
-import SeasonDisplay from "./components/SeasonDisplay";
-import Loader from "./components/Loader";
+import SearchBar from './components/SearchBar';
 
-const container = document.getElementById("root");
+const container = document.getElementById('root');
 const root = createRoot(container);
 
 // Create React Component
-class App extends React.Component {
-  state = { lat: null, errorMessage: ''};
-
-  componentDidMount() {
-    console.log('My Component was rendered on screen!');
-    window.navigator.geolocation.getCurrentPosition(
-      (position) => this.setState({ lat: position.coords.latitude }),
-      (err) => this.setState({ errorMessage: err.message })
+class App extends React.Component {  
+    render() {
+    return (
+        <div className='ui container' style={{ marginTop: '10px' }}>
+            <SearchBar />    
+        </div>
     );
-  };
-
-  componentDidUpdate() {
-    console.log('My Component was just updated!');
-  };
-
-  renderContent() {
-    if (this.state.errorMessage && !this.state.lat) {
-      return <div>Error: {this.state.errorMessage}</div>;
-    }
-    else if (!this.state.errorMessage && this.state.lat) {
-      return <SeasonDisplay lat={this.state.lat}/>;
-    }
-    else {
-      return <Loader message={"Loading location..."}/>
-    };
-  };
-
-  render() {
-    return <div className="border red">
-      {this.renderContent()}
-    </div>  
   };
 }
 
