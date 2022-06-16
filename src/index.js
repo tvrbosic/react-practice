@@ -1,18 +1,12 @@
 // Import the React and ReactDom Libraries
-import React from 'react';
-import { createRoot } from 'react-dom/client';
+import React from "react";
+import { createRoot } from "react-dom/client";
+// Import application
+import App from "./components/App";
 
-const container = document.getElementById('root');
+// Get root element and create React root element
+const container = document.getElementById("root");
 const root = createRoot(container);
 
-// Create React Component
-class App extends React.Component {
-    render() {
-        return (
-            <div> Hello </div>
-        );
-  };
-}
-
-// Take the React component and show it on the screen
+// Render Application inside React root element
 root.render(<App />);
