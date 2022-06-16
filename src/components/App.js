@@ -1,8 +1,8 @@
-import { vi } from "faker/lib/locales";
 import React from "react";
 import youtube from "../api/youtube";
 import SearchBar from "./SearchBar";
 import VideoList from "./VideoList";
+import VideoDetails from "./VideoDetail";
 
 class App extends React.Component {
   state = {
@@ -10,12 +10,21 @@ class App extends React.Component {
     selectedVideo: null,
   };
 
+  componentDidMount() {
+    this.onSearchSubmit('StarCraft');
+  };
+
   onSearchSubmit = async (searchText) => {
     const response = await youtube.get("/search", {
-      q: searchText,
+      params: {
+        q: searchText,
+      },
     });
 
-    this.setState({ videos: response.data.items });
+    this.setState({ 
+      videos: response.data.items,
+      selectedVideo: response.data.items[0]
+   });
   };
 
   onVideoSelect = (video) => {
@@ -26,10 +35,19 @@ class App extends React.Component {
     return (
       <div className="ui container">
         <SearchBar onSearchSubmit={this.onSearchSubmit} />
-        <VideoList
-          videos={this.state.videos}
-          onVideoSelect={this.onVideoSelect}
-        />
+        <div className="ui grid">
+          <div className="ui row">
+            <div className="eleven wide column">
+              <VideoDetails video={this.state.selectedVideo} />
+            </div>
+            <div className="five wide column">
+              <VideoList
+                videos={this.state.videos}
+                onVideoSelect={this.onVideoSelect}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
