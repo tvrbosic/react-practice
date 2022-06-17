@@ -14,9 +14,8 @@ class App extends React.Component {
     state = { images: [] };
 
     onSearchSubmit = async (text) => {
-        const response = await unsplash
-            .get('/search/photos', {
-                params: { query: text }
+        const response = await unsplash.get('/search/photos', {
+            params: { query: text },
         });
 
         this.setState({ images: response.data.results });
@@ -25,11 +24,11 @@ class App extends React.Component {
     render() {
         return (
             <div className='ui container' style={{ marginTop: '10px' }}>
-                <SearchBar onSubmit={this.onSearchSubmit}/>
-                <ImageList images={this.state.images}/>
+                <SearchBar onSubmit={this.onSearchSubmit} />
+                <ImageList images={this.state.images} />
             </div>
         );
-  };
+    }
 }
 
 // Take the React component and show it on the screen

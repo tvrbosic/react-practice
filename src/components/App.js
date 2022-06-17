@@ -1,56 +1,31 @@
-import React from "react";
-import youtube from "../api/youtube";
-import SearchBar from "./SearchBar";
-import VideoList from "./VideoList";
-import VideoDetails from "./VideoDetail";
+import React from 'react';
+import Accordion from './Accordion';
+import Search from './Search';
 
-class App extends React.Component {
-  state = {
-    videos: [],
-    selectedVideo: null,
-  };
+const items = [
+    {
+        title: 'What is React?',
+        content: 'React is a front end JavaScript framework.'
+    },
+    {
+        title: 'Why use React?',
+        content: 'React is a favorite JS library among engineers.'
+    },
+    {
+        title: 'How do you use React?',
+        content: 'You use React by creating components.'
+    }
+];
 
-  componentDidMount() {
-    this.onSearchSubmit('StarCraft');
-  };
 
-  onSearchSubmit = async (searchText) => {
-    const response = await youtube.get("/search", {
-      params: {
-        q: searchText,
-      },
-    });
-
-    this.setState({ 
-      videos: response.data.items,
-      selectedVideo: response.data.items[0]
-   });
-  };
-
-  onVideoSelect = (video) => {
-    this.setState({ selectedVideo: video });
-  };
-
-  render() {
+const App = () => {
     return (
-      <div className="ui container">
-        <SearchBar onSearchSubmit={this.onSearchSubmit} />
-        <div className="ui grid">
-          <div className="ui row">
-            <div className="eleven wide column">
-              <VideoDetails video={this.state.selectedVideo} />
-            </div>
-            <div className="five wide column">
-              <VideoList
-                videos={this.state.videos}
-                onVideoSelect={this.onVideoSelect}
-              />
-            </div>
-          </div>
+        <div>
+            <Search />
+            <br />
+            <Accordion items={items} />
         </div>
-      </div>
     );
-  }
-}
+};
 
 export default App;
