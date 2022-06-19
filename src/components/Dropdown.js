@@ -1,12 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
-const Dropdown = ({ options, selected, onSelectedChange }) => {
+const Dropdown = ({ options, selected, onSelectedChange, label }) => {
     const [open, setOpen] = useState(false);
+    const ref = useRef();
 
+    // Close dropdown on body click
     useEffect(() => {
-        document.body.addEventListener('click', () => {
+        const onBodyClick = (e) => {
+            // If any of the dropdown elements clicked, return (do not close dropdown)
+            if (ref.current.contains(e.target)) {
+                return;
+            }
             setOpen(false);
-        }, { capture: true });
+        };
+        // If body clicked, close dropdown
+        document.body.addEventListener('click', onBodyClick, { capture: true });
+        // Clear event listener in cleanup function
+        return () => {
+            document.body.removeEventListener('click', onBodyClick, { capture: true });
+        };
     }, []);
 
     const renderedOptions = options.map((option) => {
@@ -15,22 +27,19 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
         }
 
         return (
-            <div
-                key={option.value}
-                className='item'
-                onClick={() => onSelectedChange(option)}>
+            <div key={option.value} className='item' onClick={() => onSelectedChange(option)}>
                 {option.label}
             </div>
         );
     });
 
     return (
-        <div className='ui form'>
+        <div ref={ref} className='ui form'>
             <div className='field'>
-                <label className='label'>Select a Color</label>
-                <div 
-                className={`ui selection dropdown ${open ? 'visible active' : ''}`}
-                onClick={() => setOpen(!open)}>
+                <label className='label'>{label}</label>
+                <div
+                    onClick={() => setOpen(!open)}
+                    className={`ui selection dropdown ${open ? 'visible active' : ''}`}>
                     <i className='dropdown icon'></i>
                     <div className='text'>{selected.label}</div>
                     <div className={`menu ${open ? 'visible transition' : ''}`}>

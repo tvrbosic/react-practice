@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import Translate from './Translate';
 import Dropdown from './Dropdown';
 import Search from './Search';
 import Accordion from './Accordion';
+
 
 const items = [
     {
@@ -37,19 +39,21 @@ const App = () => {
     const [selected, setSelected] = useState(options[0]);
 
     return (
-        <div>
+        <div className='ui container'>
+            <Translate />
+            <br />
+            <br />
             <Dropdown
                 options={options}
                 selected={selected}
                 onSelectedChange={setSelected}
+                label='Select a Color'
             />
             <br />
             <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <Search />
+            <br />
+            <br />
             <Accordion items={items} />
         </div>
     );
