@@ -8,13 +8,13 @@ import { createStore } from 'redux';
 import App from './components/App';
 import reducers from './reducers';
 
-// Get root element and create React root element
+// Get root element and create React root
 const container = document.getElementById('root');
 const root = createRoot(container);
 
-// For Redux we have to wrap App with Provider
 // Render Application inside React root element
 root.render(
+	// For Redux we have to wrap App with Provider
 	<Provider store={createStore(reducers)}>
 		<App />
 	</Provider>
