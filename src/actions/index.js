@@ -1,17 +1,22 @@
 import jsonPlaceholder from '../api/jsonPlaceholder';
 import _ from 'lodash';
 
-
 // Action Creator
 export const fetchPostsAndUsers = () => async (dispatch, getState) => {
-	// Dispatch Action creator that will get invoked, wait for it to finish (update state with results) 
+	// Dispatch Action creator that will get invoked, wait for it to finish (update state with results)
 	await dispatch(fetchPosts());
 
 	// Map userIds to array and make it unique
-	const userIds = _.uniq(_.map(getState().posts, 'userId'));
-
+	// const userIds = _.uniq(_.map(getState().posts, 'userId'));
 	// For each user id, fetch user data
-	userIds.forEach(id => dispatch(fetchUser(id)));
+	// userIds.forEach((id) => dispatch(fetchUser(id)));
+
+	// Improved code above code using lodash (value is like execute)
+	_.chain(getState().posts)
+		.map('userId')
+		.uniq()
+		.forEach((id) => dispatch(fetchUser(id)))
+		.value();
 };
 
 // Action Creator
@@ -24,7 +29,7 @@ export const fetchPosts = () => {
 };
 
 // Action Creator
-export const fetchUser = id => async dispatch => {
+export const fetchUser = (id) => async (dispatch) => {
 	const response = await jsonPlaceholder.get(`/users/${id}`);
 
 	dispatch({ type: `FETCH_USER`, payload: response.data });
