@@ -1,6 +1,4 @@
-import React from 'react';
-
-import Expenses from './components/Expenses';
+import Expenses from './components/Expenses/Expenses';
 
 const App = () => {
    const expenses = [
@@ -19,7 +17,7 @@ const App = () => {
       },
       {
          id: 'e4',
-         title: 'New Desk (Wooden)',
+         title: 'New Wooden Desk',
          amount: 450,
          date: new Date(2021, 5, 12),
       },
