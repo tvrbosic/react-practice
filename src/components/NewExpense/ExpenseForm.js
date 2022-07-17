@@ -10,37 +10,37 @@ const ExpenseForm = (props) => {
 
    const titleChangeHandler = (event) => {
       setUserInput((prevState) => {
-         return {...prevState, title: event.target.value};
+         return { ...prevState, title: event.target.value };
       });
    };
 
    const amountChangeHandler = (event) => {
       setUserInput((prevState) => {
-         return {...prevState, amount: event.target.value};
+         return { ...prevState, amount: event.target.value };
       });
    };
 
    const dateChangeHandler = (event) => {
       setUserInput((prevState) => {
-         return {...prevState, date: event.target.value};
+         return { ...prevState, date: event.target.value };
       });
    };
 
    const submitHandler = (event) => {
       event.preventDefault();
-      
+
       // Handle submitted data
       const expenseData = {
          ...userInput,
-         date: new Date(userInput.date)
+         date: new Date(userInput.date),
       };
-      props.onSaveExpenseData(expenseData)
+      props.onSaveExpenseData(expenseData);
       // Clear input
       setUserInput({
          title: '',
          amount: '',
          date: '',
-      })
+      });
    };
 
    return (
@@ -52,14 +52,27 @@ const ExpenseForm = (props) => {
             </div>
             <div className='new-expense__control'>
                <label>Amount</label>
-               <input type='number' value={userInput.amount} min='0.01' step='0.01' onChange={amountChangeHandler} />
+               <input
+                  type='number'
+                  value={userInput.amount}
+                  min='0.01'
+                  step='0.01'
+                  onChange={amountChangeHandler}
+               />
             </div>
             <div className='new-expense__control'>
                <label>Date</label>
-               <input type='date' value={userInput.date} min='2019-01-01' max='2022-12-31' onChange={dateChangeHandler} />
+               <input
+                  type='date'
+                  value={userInput.date}
+                  min='2019-01-01'
+                  max='2022-12-31'
+                  onChange={dateChangeHandler}
+               />
             </div>
          </div>
          <div className='new-expense__actions'>
+            <button onClick={props.hideForm}>Cancel</button>
             <button type='submit'>Add Expense</button>
          </div>
       </form>
