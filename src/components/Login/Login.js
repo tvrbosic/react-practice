@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useContext } from 'react';
 
-import Card from '../UI/Card/Card';
+import AuthContext from '../../store/auth-context';
 import classes from './Login.module.css';
+import Card from '../UI/Card/Card';
 import Button from '../UI/Button/Button';
 
 const emailReducer = (state, action) => {
@@ -30,6 +31,8 @@ const Login = (props) => {
       value: '',
       isValid: null,
    });
+
+   const authCtx = useContext(AuthContext)
 
    // Object destructuring with aliases, useful with useEffect depencency array 
    const {isValid: emailIsValid} = emailState;
@@ -63,7 +66,7 @@ const Login = (props) => {
 
    const submitHandler = (event) => {
       event.preventDefault();
-      props.onLogin(emailState.value, passwordState.value);
+      authCtx.onLogin(emailState.value, passwordState.value);
    };
 
    return (
